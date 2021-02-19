@@ -7,6 +7,7 @@ from mplayer.models import User
 from mplayer import app, db, bcrypt
 from flask_login import login_user, current_user, logout_user, login_required
 
+count = 0
 
 posts =[]
 @app.route("/")
@@ -63,7 +64,19 @@ def save_picture(form_picture):
 
 @app.route("/account", methods=['GET', 'POST'])
 @login_required
-def account():    
+def account():
+    global count   
+    image_file = url_for('static', filename='profile_pics/' + current_user.image_file) 
+    if(count == 1):
+        flash('Your account has been updated', 'success')
+        count = 0
+    return render_template('account.html', title='Account', image_file=image_file)
+
+@app.route("/updateaccount", methods=['GET', 'POST'])
+@login_required
+def updateaccount(): 
+    global count
+    count = 1   
     form = UpdateAccountForm()
     if form.validate_on_submit():
         if form.picture.data:
@@ -72,13 +85,12 @@ def account():
         current_user.username = form.username.data
         current_user.email = form.email.data
         db.session.commit()
-        flash('Your account has been updated', 'success')
         return redirect(url_for('account'))
     elif(request.method == 'GET'):
         form.username.data = current_user.username
         form.email.data = current_user.email    
     image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
-    return render_template('account.html', title='Account',
+    return render_template('updateaccount.html', title='Update Account info',
                            image_file=image_file, form=form)
 
   

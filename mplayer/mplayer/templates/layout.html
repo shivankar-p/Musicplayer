@@ -29,15 +29,26 @@
           <div class="collapse navbar-collapse" id="navbarToggle">
             <div class="navbar-nav mr-auto">
               <a class="nav-item nav-link" href="{{ url_for('home') }}">Home</a>
+              <!-- vertical seperator-->
+              <style>
+                .vl {
+                  border-left: 2px solid white;
+                  height: 18px;
+                  align-self: center;      
+                }
+                </style>
+                <div class="vl"></div>
               <a class="nav-item nav-link" href="/browse">Browse</a>
             </div>
             <!-- Right corner -->
             <div class="navbar-nav">
               {% if current_user.is_authenticated %}
               <a class="nav-item nav-link" href="{{ url_for('account') }}">Account</a>
+              <div class="vl"></div>
               <a class="nav-item nav-link" href="{{ url_for('logout') }}">Log Out</a>
               {% else %}
                 <a class="nav-item nav-link" href="{{ url_for('login') }}">LOG IN</a>
+                <div class="vl"></div>
                 <a class="nav-item nav-link" href="{{ url_for('register') }}">SIGN UP</a>
               {% endif %}  
               </main>    

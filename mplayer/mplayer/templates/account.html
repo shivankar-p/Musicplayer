@@ -1,63 +1,20 @@
 {% extends "layout.html" %}
 {% block content %}
-<div class="content-section">
+  <div class="content-section">
+            <legend>Account</legend>
+            <hr style="width:50%;text-align: left; margin-left:0; margin-top: 0">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% for category, message in messages %}
+                    <div class="{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endwith %}
     <div class="media">
       <img class="rounded-circle account-img" src="{{ image_file }}">
       <div class="media-body">
         <h2 class="account-heading">{{ current_user.username }}</h2>
         <p class="text-secondary">{{ current_user.email }}</p>
       </div>
-    </div>
-    <!-- FORM  -->
-        <form method="POST" action="" enctype="multipart/form-data">  <!-- Encryption type-->
-            {{ form.hidden_tag() }}
-            <fieldset class="form-group">
-                <legend>Account info</legend>
-                <hr style="width:50%;text-align: left; margin-left:0; margin-top: 0">
-                {% with messages = get_flashed_messages(with_categories=true) %}
-                    {% for category, message in messages %}
-                        <div class="{{ category }}">{{ message }}</div>
-                    {% endfor %}
-                {% endwith %}
-                <div class="form-group">
-                    {{ form.username.label(class="form-control-label") }}
-
-                    {% if form.username.errors %}
-                        {{ form.username(class="form-control form-control-lg is-invalid") }}
-                        <div class="invalid-feedback">
-                            {% for error in form.username.errors %}
-                                <span>{{ error }}</span>
-                            {% endfor %}
-                        </div>
-                    {% else %}
-                        {{ form.username(class="form-control form-control-lg") }}
-                    {% endif %}
-                </div>
-                <div class="form-group">
-                    {{ form.email.label(class="form-control-label") }}
-                    {% if form.email.errors %}
-                        {{ form.email(class="form-control form-control-lg is-invalid") }}
-                        <div class="invalid-feedback">
-                            {% for error in form.email.errors %}
-                                <span>{{ error }}</span>
-                            {% endfor %}
-                        </div>
-                    {% else %}
-                        {{ form.email(class="form-control form-control-lg") }}
-                    {% endif %}
-                </div>
-                <div class="form-group">
-                    {{ form.picture.label }}
-                    {{ form.picture(class="form-control-file") }}
-                    {% if form.picture.errors %}
-                        {% for error in form.picture.errors %}
-                            <span class="text-danger">{{ error }}</span></br>
-                        {% endfor %}
-                    {% endif %}
-                </div>    
-            </fieldset>
-            <div class="form-group">
-                {{ form.submit(class="btn btn-outline-info") }}
-            </div>
   </div>
+    <button type="button" onclick="window.location.href='{{ url_for( 'updateaccount' ) }}';">Update Account</button>
+
 {% endblock content %}    
