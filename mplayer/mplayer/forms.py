@@ -52,7 +52,23 @@ class UpdateAccountForm(FlaskForm):
         if(email.data != current_user.email):
             user  = User.query.filter_by(email=email.data).first()
             if(user):
-                raise ValidationError('Email is already Registered. Try logging in!')    
+                raise ValidationError('Email is already Registered. Try logging in!')   
+
+class RequestResetPasswordForm(FlaskForm):
+    email = StringField('Email',
+                        validators=[DataRequired(), Email()])
+    submit = SubmitField('Reset Password')                    
+
+    def validate_email(self, email):
+       user  = User.query.filter_by(email=email.data).first()
+       if(user == None):
+           raise ValidationError('The provided email is not associated with any of the account.')    
+
+class ResetPasswordForm(FlaskForm):
+    password = PasswordField('Password', validators=[DataRequired()])
+    confirm_password = PasswordField('Confirm Password',
+                                     validators=[DataRequired(), EqualTo('password')])
+    submit = SubmitField('Reset Password')                                 
 
                               
                                                                    
