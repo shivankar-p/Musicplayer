@@ -15,5 +15,5 @@
         <p class="text-secondary">{{ current_user.email }}</p>
       </div>
   </div>
-    <button type="button" onclick="window.location.href='{{ url_for( 'updateaccount' ) }}';">Update Account</button>
+    <button type="button" onclick="window.location.href='{{ url_for( 'users.updateaccount' ) }}';">Update Account</button>
 {% endblock content %}    
