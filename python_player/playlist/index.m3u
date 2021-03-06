@@ -1,0 +1,13 @@
+#EXTM3U
+#EXTINF:-1 tvg-id="" tvg-name="" tvg-country="" tvg-language="" tvg-logo="https://i.imgur.com/bPCsrYQ.jpg" tvg-url="" group-title="",Ems Vechte Welle
+https://live.radio-aktiv.de/evw.mp3
+#EXTINF:-1 tvg-id="" tvg-name="" tvg-country="" tvg-language="" tvg-logo="https://i.imgur.com/Y8Z6chO.png" tvg-url="" group-title="",MDR Jump
+https://mdr-284320-0.sslcast.mdr.de/mdr/284320/0/mp3/high/stream.mp3
+#EXTINF:-1 tvg-id="" tvg-name="" tvg-country="" tvg-language="" tvg-logo="https://i.imgur.com/5Vo2oxF.jpg" tvg-url="" group-title="",MDR Radio Sachsen Bautzen
+https://mdr-284280-1.sslcast.mdr.de/mdr/284280/1/mp3/high/stream.mp3
+#EXTINF:-1 tvg-id="" tvg-name="" tvg-country="" tvg-language="" tvg-logo="https://i.imgur.com/Y6bNYBf.jpg" tvg-url="" group-title="",Nostalgie Route 66
+http://cdn.nrjaudio.fm/adwz1/de/57485/mp3_128.mp3
+#EXTINF:-1 tvg-id="" tvg-name="" tvg-country="" tvg-language="" tvg-logo="https://i.imgur.com/SwM099d.png" tvg-url="" group-title="",Ostsee Welle
+http://mp3.ostseewelle.c.nmdn.net/ostseewellelive/livestream.mp3
+#EXTINF:-1 tvg-id="" tvg-name="" tvg-country="" tvg-language="" tvg-logo="https://i.imgur.com/Nb4GEO5.png" tvg-url="" group-title="",Radio Schlager Paradies
+https://webstream.schlagerparadies.de/schlagerparadies128k.mp3
