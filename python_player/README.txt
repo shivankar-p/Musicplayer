@@ -1,4 +1,8 @@
-﻿
+If not already done:
+1. install pip3 using command "sudo apt install python3-pip"
+2. install python-vlc using command "sudo pip3 install python-vlc"
+3. install vlc media player using command "sudo apt-get install vlc"
+
 Extract the zip in a folder.
 The vlcpl.py is wrapper class for integration with VLC player.
 Change permission of vlcpl.py to 755.
