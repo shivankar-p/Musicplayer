@@ -1,7 +1,125 @@
 {% extends "layout.html" %}
 {% block content %}
-    <div class="body">
-            <h1>Home page</h1>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <style type="text/css">
+      body {
+        margin-top: 5rem;
+        float: left;
+        padding: 0;
+        background: #EEE;
+        font-family:Optima;
+      }
+      div.r {
+        text-align: center;
+        float:right;
+      }
+      .wrap {
+        overflow: hidden;
+        margin: 10px;
+        width : 100vw;
+      }
+      .box {
+        float:left;
+        position: relative;
+        width:12.6vw;
+        height:14.6vw;
+      }
+      .boxInner {
+        position: absolute;
+        left: 10px;
+        right: 10px;
+        top: 10px;
+        bottom: 10px;
+        overflow: hidden;
+        box-shadow:0 4px 20px rgba(0, 0, 0, 0.6);
+        border-radius:2px;
+      }
+      .boxInner img {
+        width: 100%;
+        height: 100%;
+      }
+      .boxInner .titleBox {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        font-size:1.2em;
+        line-height:1.1;
+        background: #000;
+        background: rgba(0, 0, 0, 0.6);
+        color: #fff;
+      }
+      
+    @media only screen and (max-width : 480px) {
+      /* Smartphone view: 1 tile */
+      .box {
+        width: 100vw;
+        height: 100vw;
+      }
+    }
+    @media only screen and (max-width : 650px) and (min-width : 481px) {
+      /* Tablet view: 2 tiles */
+      .box {
+        width: 47.9vw;
+        height: 47.9vw;
+      }
+    }
+    @media only screen and (max-width : 1050px) and (min-width : 651px) {
+      /* Small desktop / ipad view: 3 tiles */
+      .box {
+        width: 32.3vw;
+        height: 32.3vw;
+      }
+    }
+    @media only screen and (max-width : 1290px) and (min-width : 1051px) {
+      /* Medium desktop: 4 tiles */
+      .box {
+        width: 24.5vw;
+        height: 24.5vw;
+      }
+    }
+    </style>
+
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="box">
+      <div class="boxInner">
+        <img src= "https://i.ibb.co/wCjQf5d/despacito.jpg"/>
+        <div class="titleBox">
+            <div style = "padding-top: 0.3em; display: inline-block;  padding-left: 0.4em;">Baby</div>
+            <div class = "r">
+              <a class="nav-item nav-link" href = "{{ url_for('users.player') }}"><i class="fa fa-play" style="font-size:18px;color:wheat"></i></a>
+            </div>     
         </div>
+      </div>
+    </div>
+    <div class="box">
+      <div class="boxInner">
+        <img src= "https://i.ibb.co/wCjQf5d/despacito.jpg"/>
+        <div class="titleBox">
+            <div style = "padding-top: 0.3em; display: inline-block;  padding-left: 0.4em;">Baby</div>
+            <div class = "r">
+              <a class="nav-item nav-link" href = "{{ url_for('users.player') }}"><i class="fa fa-play" style="font-size:18px;color:wheat"></i></a>
+            </div>     
+        </div>
+      </div>
+    </div>
+    <div class="box">
+      <div class="boxInner">
+        <img src= "https://i.ibb.co/wCjQf5d/despacito.jpg"/>
+        <div class="titleBox">
+            <div style = "padding-top: 0.3em; display: inline-block; padding-left: 0.4em;">Baby</div>
+            <div class = "r">
+              <a class="nav-item nav-link" href = "{{ url_for('users.player') }}"><i class="fa fa-play" style="font-size:18px;color:wheat"></i></a>
+            </div>     
+        </div>
+      </div>
+    </div>
+  
+</body>
 
 {% endblock content %}
