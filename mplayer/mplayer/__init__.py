@@ -32,7 +32,9 @@ def create_app(config_class=Config):
 
     from mplayer.users.routes import users
     from mplayer.main.routes import main
+    from mplayer.music.routes import music
     app.register_blueprint(users)
     app.register_blueprint(main)
+    app.register_blueprint(music)
 
     return app

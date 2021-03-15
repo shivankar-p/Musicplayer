@@ -8,3 +8,4 @@ posts =[]
 @main.route("/home")
 def home():
     return render_template('home.html', posts=posts)
+ 
