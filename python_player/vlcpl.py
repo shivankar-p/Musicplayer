@@ -11,32 +11,49 @@ class playerwrapper(object):
 
     playlists = set(['pls','m3u'])
 
+    #testing decryption function
+    @staticmethod
+    def extract_song_ids(playlist_enc):
+        return ["kJQP7kiw5Fk", "60ItHLz5WEA", "3cBuQ0PuOcY"]
+
     def __init__(self):
-        self.vlc = Instance()
+        self.vlc = Instance("--no-video")
         self.listPlayer = self.vlc.media_list_player_new()
 
     def setPlaylist(self, url):
         ext = (url.rpartition(".")[2])[:3]
-        valid = False
+        valid = "Invalid"
         try:
-            if url.startswith('file:///'):
-                valid = True
+            if url.startswith('playlist://'):
+                valid = "Application"
             elif url.startswith('http://') or url.startswith('https://'):
                 ret = requests.get(url, stream=True)
-                valid = ret.ok
+                if ret.ok:
+                    valid = "Web"
+            elif url.startswith('file:///'):
+                valid = "Local"
         except Exception as e:
             print('Failed to get stream: {e}'.format(e=e))
             valid = False
         else:
-            if valid:
+            if valid == "Application":
+                # Extract songs ids from encrypted string
+                playlist = url[len('playlist://') - 1:]
+                songs = playerwrapper.extract_song_ids(playlist)
+                self.mediaList = self.vlc.media_list_new()
+                for id in songs:
+                    item = "https://www.youtube.com/watch?v=" + id
+                    self.mediaList.add_media(self.vlc.media_new(item))
+                self.listPlayer.set_media_list(self.mediaList)
+            elif valid == "Web":
                 if ext in playerwrapper.playlists:
                     self.mediaList = self.vlc.media_list_new([url])
-                else:
-                    path = url[len('file:///') - 1:]
-                    songs = os.listdir(path)
-                    self.mediaList = self.vlc.media_list_new()
-                    for s in songs:
-                        self.mediaList.add_media(self.vlc.media_new(os.path.join(path,s)))
+            elif valid == "Local":
+                path = url[len('file:///') - 1:]
+                songs = os.listdir(path)
+                self.mediaList = self.vlc.media_list_new()
+                for s in songs:
+                    self.mediaList.add_media(self.vlc.media_new(os.path.join(path,s)))
                 self.listPlayer.set_media_list(self.mediaList)
             else:
                 print('error getting the audio')
@@ -68,7 +85,6 @@ class playerwrapper(object):
 
     def playItemAtIndex(self, idx):
         self.listPlayer.play_item_at_index(idx)
-
 # testing code
 if __name__ == "__main__":
     # Player instantiation

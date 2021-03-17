@@ -3,7 +3,7 @@
 from vlcpl import *
 
 # Player instantiation
-player = player_wrapper()
+player = playerwrapper()
 
 op = 0
 while (op != 9):
