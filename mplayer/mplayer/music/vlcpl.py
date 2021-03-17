@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-import requests
+'''import requests
 from vlc import Instance
 from vlc import PlaybackMode
 from time import sleep
@@ -150,5 +150,4 @@ if __name__ == "__main__":
             continue
 
         elif op == 9:
-            break
-
+            break '''

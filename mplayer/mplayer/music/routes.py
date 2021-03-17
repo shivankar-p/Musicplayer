@@ -5,15 +5,16 @@ from mplayer.music.vlcpl import *
 
 music = Blueprint('music', __name__)
 ytmusic = YTMusic()
-player = playerwrapper()
+#player = playerwrapper()
 
 @music.route('/browse', methods=['POST', 'GET'])
 def browse():
     return render_template('browse.html')
 
-'''@music.route('/browse/<pl_ID>')
-def browse_pl_ID(pl_ID):
-    pass'''
+@music.route('/browse/<song_ID>')
+def play_song(song_ID):
+    return render_template('play_song.html', song_ID = song_ID)
+
 
 @music.route('/background_process')
 def background_process():
@@ -24,9 +25,9 @@ def background_process():
         return jsonify(result='You added ' + song_ID)
 
     except Exception as e:
-    	return str(e)
+        return str(e)
 
-@music.route('/playlist_play')
+'''@music.route('/playlist_play')
 def playlist_play():
     try:
         playlist_name = request.args.get('playlist_name', '0', type=str)
@@ -78,4 +79,4 @@ def playlist_stop():
 
     except Exception as e:
     	return str(e)
-
+'''
