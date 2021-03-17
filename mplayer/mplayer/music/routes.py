@@ -7,14 +7,25 @@ music = Blueprint('music', __name__)
 ytmusic = YTMusic()
 #player = playerwrapper()
 
-@music.route('/browse', methods=['POST', 'GET'])
-def browse():
-    return render_template('browse.html')
-
 @music.route('/browse/<song_ID>')
 def play_song(song_ID):
     return render_template('play_song.html', song_ID = song_ID)
 
+@music.route('/play_song_process')
+def play_song_process():
+    try:
+        song_ID = request.args.get('song_ID', 0, type=str)
+        print(song_ID)
+        return jsonify(result='You are playing ' + song_ID)
+
+    except Exception as e:
+        return str(e)
+
+
+
+@music.route('/browse', methods=['POST', 'GET'])
+def browse():
+    return render_template('browse.html')
 
 @music.route('/background_process')
 def background_process():

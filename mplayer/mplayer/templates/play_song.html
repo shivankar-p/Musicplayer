@@ -1,1 +1,24 @@
-<p>hi, playing {{ song_ID }}</p>
+<head>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script type=text/javascript>
+        $(function() {
+        $('a#process_input').bind('click', function() {
+            $.getJSON('/play_song_process', {
+            song_ID: ' {{ song_ID }} ',
+            }, function(data) {
+            $("#result").text(data.result);1
+            });
+            return false;
+        });
+        });
+    </script>
+</head>
+
+<body>
+    <div class='container'>
+    <h3>Musico player</h3>
+        <form>
+            <a href=# id=process_input><button class='btn btn-default'>Play</button></a>
+        </form>
+    </div>
+</body>
