@@ -77,6 +77,19 @@ def updateaccount():
     image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
     return render_template('updateaccount.html', title='Update Account info',
                            image_file=image_file, form=form)    
+  
+@users.route("/deleteaccount", methods=['GET', 'POST'])
+@login_required
+def delete(): 
+    form = DeleteAccountForm()
+    if form.validate_on_submit():
+        obj = User.query.get(current_user.id)
+        db.session.delete(obj)
+        db.session.commit()
+        flash('Your account has been deleted', 'success')
+        return redirect(url_for('main.home'))
+    
+    return render_template('delete_account.html', title='Delete account', form=form)
 
 
 
