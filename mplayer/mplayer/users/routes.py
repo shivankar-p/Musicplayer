@@ -2,7 +2,7 @@ from flask import render_template, url_for, flash, redirect, request, Blueprint
 from flask_login import login_user, current_user, logout_user, login_required
 from mplayer import db, bcrypt
 from mplayer.users.forms import (RegistrationForm, LoginForm, UpdateAccountForm, 
-                           RequestResetPasswordForm, ResetPasswordForm)
+                           RequestResetPasswordForm, ResetPasswordForm, DeleteAccountForm)
 from mplayer.models import User
 from mplayer.users.utils import save_picture, send_reset_email
 
