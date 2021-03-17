@@ -5,7 +5,7 @@ from mplayer.music.vlcpl import *
 
 music = Blueprint('music', __name__)
 ytmusic = YTMusic()
-#player = playerwrapper()
+player = playerwrapper()
 
 @music.route('/browse/<song_ID>')
 def play_song(song_ID):
@@ -16,6 +16,9 @@ def play_song_process():
     try:
         song_ID = request.args.get('song_ID', 0, type=str)
         print('Playing ' + song_ID)
+        song_url = 'song://' + song_ID
+        player.setPlaylist(song_url)
+        player.playPlaylist()
         return jsonify(result='You are playing ' + song_ID)
 
     except Exception as e:
@@ -26,6 +29,7 @@ def pause_song_process():
     try:
         song_ID = request.args.get('song_ID', 0, type=str)
         print('Paused ' + song_ID)
+        player.pausePlaylist()
         return jsonify(result='Paused ' + song_ID)
 
     except Exception as e:
@@ -36,17 +40,11 @@ def stop_song_process():
     try:
         song_ID = request.args.get('song_ID', 0, type=str)
         print('Stopped ' + song_ID)
+        player.stopPlaylist()
         return jsonify(result='Stopped ' + song_ID)
 
     except Exception as e:
         return str(e)
-
-
-
-
-
-
-
 
 @music.route('/browse', methods=['POST', 'GET'])
 def browse():
@@ -63,7 +61,7 @@ def background_process():
     except Exception as e:
         return str(e)
 
-'''@music.route('/playlist_play')
+@music.route('/playlist_play')
 def playlist_play():
     try:
         playlist_name = request.args.get('playlist_name', '0', type=str)
@@ -115,4 +113,4 @@ def playlist_stop():
 
     except Exception as e:
     	return str(e)
-'''
+

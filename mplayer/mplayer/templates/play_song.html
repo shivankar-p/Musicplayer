@@ -4,7 +4,7 @@
         $(function() {
         $('a#play_input').bind('click', function() {
             $.getJSON('/play_song_process', {
-            song_ID: ' {{song_ID}} ',
+            song_ID: '{{song_ID}}',
             }, function(data) {
             $("#result").text(data.result);1
             });
@@ -16,7 +16,7 @@
         $(function() {
         $('a#pause_input').bind('click', function() {
             $.getJSON('/pause_song_process', {
-            song_ID: ' {{song_ID}} ',
+            song_ID: '{{song_ID}}',
             }, function(data) {
             $("#result").text(data.result);1
             });
@@ -28,7 +28,7 @@
         $(function() {
         $('a#stop_input').bind('click', function() {
             $.getJSON('/stop_song_process', {
-            song_ID: ' {{song_ID}} ',
+            song_ID: '{{song_ID}}',
             }, function(data) {
             $("#result").text(data.result);1
             });

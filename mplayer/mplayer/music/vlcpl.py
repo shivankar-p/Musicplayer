@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 
-'''import requests
+import os
+import requests
+import pafy
 from vlc import Instance
 from vlc import PlaybackMode
 from time import sleep
-import os
-
 
 class playerwrapper(object):
 
@@ -24,7 +24,9 @@ class playerwrapper(object):
         valid = 'Invalid'
         try:
             if url.startswith('playlist://'):
-                valid = 'Application'
+                valid = 'ApplicationPlaylist'
+            elif url.startswith('song://'):
+                valid = 'ApplicationSong'
             elif url.startswith('http://') or url.startswith('https://'):
                 ret = requests.get(url, stream=True)
                 if ret.ok:
@@ -35,12 +37,20 @@ class playerwrapper(object):
             print('Failed to get stream: {e}'.format(e=e))
             valid = False
         else:
-            if valid == 'Application':
-                playlist_name = url[len('playlist://') - 1:]
+            if valid == 'ApplicationPlaylist':
+                playlist_name = url[len('playlist://'):]
                 songs = playerwrapper.extract_song_ids(playlist_name)
                 self.mediaList = self.vlc.media_list_new()
                 for song_id in songs:
-                    self.mediaList.add_media(self.vlc.media_new('https://www.youtube.com/watch?v=' + song_id))
+                    yturl = 'https://www.youtube.com/watch?v=' + song_id
+                    audio = pafy.new(yturl)
+                    self.mediaList.add_media(self.vlc.media_new(audio.getbest().url))
+            elif valid == 'ApplicationSong':
+                song_id = url[len('song://'):]
+                self.mediaList = self.vlc.media_list_new()
+                yturl = 'https://www.youtube.com/watch?v=' + song_id
+                audio = pafy.new(yturl)
+                self.mediaList.add_media(self.vlc.media_new(audio.getbest().url))
             elif valid == 'Web':
                 if ext in playerwrapper.playlists:
                     self.mediaList = self.vlc.media_list_new([url])
@@ -150,4 +160,4 @@ if __name__ == "__main__":
             continue
 
         elif op == 9:
-            break '''
+            break
