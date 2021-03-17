@@ -15,11 +15,36 @@ def play_song(song_ID):
 def play_song_process():
     try:
         song_ID = request.args.get('song_ID', 0, type=str)
-        print(song_ID)
+        print('Playing ' + song_ID)
         return jsonify(result='You are playing ' + song_ID)
 
     except Exception as e:
         return str(e)
+
+@music.route('/pause_song_process')
+def pause_song_process():
+    try:
+        song_ID = request.args.get('song_ID', 0, type=str)
+        print('Paused ' + song_ID)
+        return jsonify(result='Paused ' + song_ID)
+
+    except Exception as e:
+        return str(e)
+        
+@music.route('/stop_song_process')
+def stop_song_process():
+    try:
+        song_ID = request.args.get('song_ID', 0, type=str)
+        print('Stopped ' + song_ID)
+        return jsonify(result='Stopped ' + song_ID)
+
+    except Exception as e:
+        return str(e)
+
+
+
+
+
 
 
 

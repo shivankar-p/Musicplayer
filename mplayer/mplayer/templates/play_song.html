@@ -2,9 +2,9 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script type=text/javascript>
         $(function() {
-        $('a#process_input').bind('click', function() {
+        $('a#play_input').bind('click', function() {
             $.getJSON('/play_song_process', {
-            song_ID: ' {{ song_ID }} ',
+            song_ID: ' {{song_ID}} ',
             }, function(data) {
             $("#result").text(data.result);1
             });
@@ -12,13 +12,40 @@
         });
         });
     </script>
+    <script type=text/javascript>
+        $(function() {
+        $('a#pause_input').bind('click', function() {
+            $.getJSON('/pause_song_process', {
+            song_ID: ' {{song_ID}} ',
+            }, function(data) {
+            $("#result").text(data.result);1
+            });
+            return false;
+        });
+        });
+    </script>
+    <script type=text/javascript>
+        $(function() {
+        $('a#stop_input').bind('click', function() {
+            $.getJSON('/stop_song_process', {
+            song_ID: ' {{song_ID}} ',
+            }, function(data) {
+            $("#result").text(data.result);1
+            });
+            return false;
+        });
+        });
+    </script>
+
 </head>
 
 <body>
     <div class='container'>
     <h3>Musico player</h3>
         <form>
-            <a href=# id=process_input><button class='btn btn-default'>Play</button></a>
+            <a href=# id=play_input><button class='btn btn-default'>Play</button></a>
+            <a href=# id=pause_input><button class='btn btn-default'>Pause</button></a>
+            <a href=# id=stop_input><button class='btn btn-default'>Stop</button></a>
         </form>
     </div>
 </body>
