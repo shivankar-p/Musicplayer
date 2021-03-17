@@ -12,6 +12,66 @@
         });
         });
     </script>
+    <script type=text/javascript>
+        $(function() {
+        $('a#playlist_play').bind('click', function() {
+            $.getJSON('/playlist_play', {
+            playlist_name: $('input[name="playlist_name"]').val(),
+            }, function(data) {
+            $("#result").text(data.result);
+            });
+            return false;
+        });
+        });
+    </script>
+    <script type=text/javascript>
+        $(function() {
+        $('a#playlist_pause').bind('click', function() {
+            $.getJSON('/playlist_pause', {
+            playlist_name: $('input[name="playlist_name"]').val(),
+            }, function(data) {
+            $("#result").text(data.result);
+            });
+            return false;
+        });
+        });
+    </script>
+    <script type=text/javascript>
+        $(function() {
+        $('a#playlist_next').bind('click', function() {
+            $.getJSON('/playlist_next', {
+            playlist_name: $('input[name="playlist_name"]').val(),
+            }, function(data) {
+            $("#result").text(data.result);
+            });
+            return false;
+        });
+        });
+    </script>
+    <script type=text/javascript>
+        $(function() {
+        $('a#playlist_previous').bind('click', function() {
+            $.getJSON('/playlist_previous', {
+            playlist_name: $('input[name="playlist_name"]').val(),
+            }, function(data) {
+            $("#result").text(data.result);
+            });
+            return false;
+        });
+        });
+    </script>
+    <script type=text/javascript>
+        $(function() {
+        $('a#playlist_stop').bind('click', function() {
+            $.getJSON('/playlist_stop', {
+            playlist_name: $('input[name="playlist_name"]').val(),
+            }, function(data) {
+            $("#result").text(data.result);
+            });
+            return false;
+        });
+        });
+    </script>
 </head>
 
 <body>
@@ -20,6 +80,14 @@
         <form>
             <input type=text size=5 name=song_name>
             <a href=# id=process_input><button class='btn btn-default'>Add</button></a>
+        </form>
+        <form>
+            <input type=text size=5 name=playlist_name>
+            <a href=# id=playlist_play><button class='btn btn-default'>Play</button></a>
+            <a href=# id=playlist_pause><button class='btn btn-default'>Pause</button></a>
+            <a href=# id=playlist_next><button class='btn btn-default'>Next</button></a>
+            <a href=# id=playlist_previous><button class='btn btn-default'>Previous</button></a>
+            <a href=# id=playlist_stop><button class='btn btn-default'>Stop</button></a>
         </form>
     <p id=result></p>
     </div>
