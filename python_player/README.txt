@@ -1,20 +1,29 @@
+Package requirements:
+=====================
 If not already done:
 1. install pip3 using command "sudo apt install python3-pip"
 2. install python-vlc using command "sudo pip3 install python-vlc"
 3. install vlc media player using command "sudo apt-get install vlc"
+4. correct youtube.luac using following steps:
+   4.1 download https://github.com/videolan/vlc/blob/master/share/lua/playlist/youtube.lua to Dowloads folder
+   4.2 copy the downloaded youtube.lua using command:
+       cp ~/Downloads/youtube.lua /usr/lib/x86_64-linux-gnu/vlc/lua/playlist/youtube.luac
+5. install pafy using command "sudo pip3 install pafy"
+6. install youtube-dl using command "sudo pip3 install youtube-dl"
 
-Extract the zip in a folder.
-The vlcpl.py is wrapper class for integration with VLC player.
-Change permission of vlcpl.py to 755.
-$ chmod 755 ./vlcpl.py
+Usage:
+======
+Change permission of callingmodule.py to 755 using following commands in Musicplayer/python_player/ :
+$ chmod 755 ./callingmodule.py
 
 The usage is demonstrated when run as program.
-Run ./vlcpl.py from bash command prompt in terminal.
+Run ./callingmodule.py from bash command prompt in terminal.
 
-
+Example executions of callingmodule.py:
+=======================================
 1. Playing all songs in a folder by providing playlist as file:///<path>/
 
-$ ./vlcpl.py 
+$ ./callingmodule.py 
 Enter option:
 Enter option:
  1: Set playlist
@@ -59,7 +68,7 @@ $
 2. Playing all songs in a .m3u or .pls playlist file by providing playlist as file:///<path>/<filename>.m3u or https://<server-path>/<filename>.m3u or
 file:///<path>/<filename>.pls or https://<server-path>/<filename>.pls
 
-$ ./vlcpl.py 
+$ ./callingmodule.py
 Enter option:
  1: Set playlist
  2: Play playlist
@@ -96,7 +105,6 @@ Enter option:
  7. Set playback mode
  8. Play item at index
  9. Exit
-[00007f9874004e50] prefetch stream error: unimplemented query (264) in control
 5
 Playing next in playlist: file:///home/playlist/index.m3u
 Enter option:
@@ -109,7 +117,6 @@ Enter option:
  7. Set playback mode
  8. Play item at index
  9. Exit
-[00007f98743033c0] prefetch stream error: unimplemented query (264) in control
 9
 $
 
