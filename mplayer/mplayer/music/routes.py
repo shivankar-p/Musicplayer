@@ -88,7 +88,7 @@ def playlist_pause():
 def playlist_next():
     try:
         playlist_name = request.args.get('playlist_name', '0', type=str)
-        player.NextInPlaylist()
+        player.nextInPlaylist()
         return jsonify(result='Playing next song in ' + playlist_name)
 
     except Exception as e:

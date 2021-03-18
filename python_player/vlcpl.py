@@ -12,7 +12,7 @@ class playerwrapper(object):
     playlists = set(['pls','m3u'])
 
     def __init__(self):
-        self.vlc = Instance("--no-video")
+        self.vlc = Instance("--no-video prefer-insecure --quiet")
         self.listPlayer = self.vlc.media_list_player_new()
 
     @staticmethod
@@ -42,13 +42,13 @@ class playerwrapper(object):
                 songs = playerwrapper.extract_song_ids(playlist_name)
                 self.mediaList = self.vlc.media_list_new()
                 for song_id in songs:
-                    yturl = 'https://www.youtube.com/watch?v=' + song_id
+                    yturl = 'http://www.youtube.com/watch?v=' + song_id
                     audio = pafy.new(yturl)
                     self.mediaList.add_media(self.vlc.media_new(audio.getbest().url))
             elif valid == 'ApplicationSong':
                 song_id = url[len('song://'):]
                 self.mediaList = self.vlc.media_list_new()
-                yturl = 'https://www.youtube.com/watch?v=' + song_id
+                yturl = 'http://www.youtube.com/watch?v=' + song_id
                 audio = pafy.new(yturl)
                 self.mediaList.add_media(self.vlc.media_new(audio.getbest().url))
             elif valid == 'Web':
@@ -70,13 +70,21 @@ class playerwrapper(object):
         self.listPlayer.play()
 
     def nextInPlaylist(self):
-        self.listPlayer.next()
+        ret = self.listPlayer.next()
+        retry = 0
+        while (ret != 0 and retry != 5):
+            ret = self.listPlayer.next()
+            retry = retry + 1
 
     def pausePlaylist(self):
         self.listPlayer.pause()
 
     def previousInPlaylist(self):
-        self.listPlayer.previous()
+        ret = self.listPlayer.previous()
+        retry = 0
+        while (ret != 0 and retry != 5):
+            ret = self.listPlayer.previous()
+            retry = retry + 1
 
     def stopPlaylist(self):
         self.listPlayer.stop()
