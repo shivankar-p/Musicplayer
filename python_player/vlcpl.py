@@ -3,6 +3,7 @@
 import os
 import requests
 import pafy
+from mplayer.returnsongid import *
 from vlc import Instance
 from vlc import PlaybackMode
 from time import sleep
@@ -14,10 +15,6 @@ class playerwrapper(object):
     def __init__(self):
         self.vlc = Instance("--no-video prefer-insecure --quiet")
         self.listPlayer = self.vlc.media_list_player_new()
-
-    @staticmethod
-    def extract_song_ids(playlist_name):
-        return ['kJQP7kiw5Fk', '60ItHLz5WEA', 'kffacxfA7G4']
 
     def setPlaylist(self, url):
         ext = (url.rpartition(".")[2])[:3]
@@ -39,7 +36,7 @@ class playerwrapper(object):
         else:
             if valid == 'ApplicationPlaylist':
                 playlist_name = url[len('playlist://'):]
-                songs = playerwrapper.extract_song_ids(playlist_name)
+                songs = ret_songIDs(playlist_name)
                 self.mediaList = self.vlc.media_list_new()
                 for song_id in songs:
                     yturl = 'http://www.youtube.com/watch?v=' + song_id

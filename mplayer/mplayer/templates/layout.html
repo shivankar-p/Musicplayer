@@ -39,6 +39,10 @@
                 </style>
                 <div class="vl"></div>
               <a class="nav-item nav-link" href="{{ url_for('music.browse') }}">Browse</a>
+              {% if current_user.is_authenticated %}
+              <div class="vl"></div>
+                <a class="nav-item nav-link" href="{{ url_for('music.playlist') }}">Playlist</a>
+                {% endif %}
             </div>
             <!-- Right corner -->
             <div class="navbar-nav">

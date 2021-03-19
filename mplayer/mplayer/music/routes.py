@@ -1,8 +1,10 @@
 from flask import Flask, render_template, url_for, flash, redirect, request, Blueprint, jsonify
+from flask_login import login_required
 from mplayer import db, bcrypt
 from ytmusicapi import YTMusic
 from mplayer.music.vlcpl import *
 from mplayer.users.forms import SearchForm
+from mplayer.models import sng_in_pl
 
 music = Blueprint('music', __name__)
 ytmusic = YTMusic()
@@ -83,6 +85,7 @@ def background_process():
     except Exception as e:
         return str(e)'''
 
+@login_required
 @music.route('/playlist_play')
 def playlist_play():
     try:
@@ -93,7 +96,7 @@ def playlist_play():
         return jsonify(result='Playing ' + playlist_name)
 
     except Exception as e:
-    	return str(e)
+        return str(e)
 
 
 @music.route('/playlist_pause')
@@ -104,7 +107,7 @@ def playlist_pause():
         return jsonify(result='Pausing ' + playlist_name)
 
     except Exception as e:
-    	return str(e)
+        return str(e)
 
 @music.route('/playlist_next')
 def playlist_next():
@@ -114,7 +117,7 @@ def playlist_next():
         return jsonify(result='Playing next song in ' + playlist_name)
 
     except Exception as e:
-    	return str(e)
+        return str(e)
 
 @music.route('/playlist_previous')
 def playlist_previous():
@@ -124,7 +127,37 @@ def playlist_previous():
         return jsonify(result='Playing previous song in ' + playlist_name)
 
     except Exception as e:
-    	return str(e)
+        return str(e)
+
+@music.route('/playlist_repeat')
+def playlist_repeat():
+    try:
+        playlist_name = request.args.get('playlist_name', '0', type=str)
+        player.setPlaybackMode('repeat')
+        return jsonify(result='Setting playback mode to repeating current song')
+
+    except Exception as e:
+        return str(e)
+
+@music.route('/playlist_loop')
+def playlist_loop():
+    try:
+        playlist_name = request.args.get('playlist_name', '0', type=str)
+        player.setPlaybackMode('loop')
+        return jsonify(result='Setting playback mode to looping current playlist')
+
+    except Exception as e:
+        return str(e)
+
+@music.route('/playlist_default')
+def playlist_default():
+    try:
+        playlist_name = request.args.get('playlist_name', '0', type=str)
+        player.setPlaybackMode('default')
+        return jsonify(result='Restoring to default sequential playback mode')
+
+    except Exception as e:
+        return str(e)
 
 @music.route('/playlist_stop')
 def playlist_stop():
@@ -134,6 +167,69 @@ def playlist_stop():
         return jsonify(result='Stopping ' + playlist_name)
 
     except Exception as e:
-    	return str(e)
+        return str(e)
 
+#playlist choices
+@login_required
+@music.route('/playlist')
+def playlist():
+    return render_template('playlist.html')
 
+@music.route('/choice1', methods=['POST', 'GET'])
+def choice1():
+    try:
+        song_pl = request.args.get('song_name', 0, type=str)
+        lst = song_pl.split("_")
+        sng = lst[0]
+        pl = lst[1]#we actually have to add song id
+
+        song_results = ytmusic.search(query = sng, filter = "songs")
+        song_ID = song_results[0]['videoId']
+        songinfo = sng_in_pl(username = current_user.username, playlist = pl, song = song_ID)
+        db.session.add(songinfo)
+        db.session.commit()
+        return jsonify(result='You added ' + sng + 'in' + pl)
+
+    except Exception as e:
+        return str(e)
+
+@music.route('/choice2', methods=['POST', 'GET'])
+def choice2():
+    try:
+        song_pl = request.args.get('song_name', 0, type=str)
+        lst = song_pl.split("_")
+        sng = lst[0]
+        pl = lst[1]#we actually have to add song id
+
+        song_results = ytmusic.search(query = sng, filter = "songs")
+        song_ID = song_results[0]['videoId']
+        songinfo = sng_in_pl(username = current_user.username, playlist = pl, song = song_ID)
+        db.session.delete(songinfo)
+        db.session.commit()
+        return jsonify(result='You added ' + sng + 'in' + pl)
+
+    except Exception as e:
+        return str(e)
+
+@music.route('/choice3')
+def choice3():
+    try:
+        db.sng_in_pl.filter_by(username=current_user.username)
+        return jsonify(result='You added ' + sng + 'in' + pl)
+
+    except Exception as e:
+        return str(e)
+
+@music.route('/choice4', methods=['POST', 'GET'])
+def choice4():
+    try:
+        pl = request.args.get('song_name', 0, type=str)
+        fil = db.sng_in_pl.filter_by(username=current_user.username)
+        fil2 = fil.filter_by(playlist= pl)
+        ls = []
+        for i in fil2:
+            ls.append(i.username)
+        return jsonify(result= ls)
+
+    except Exception as e:
+        return str(e)

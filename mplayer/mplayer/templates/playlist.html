@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script type=text/javascript>
+        $(function() {
+        $('a#process_input').bind('click', function() {
+            $.getJSON('/choice1', {
+            song_name: $('input[name="song_name"]').val(),
+            }, function(data) {
+            $("#result").text(data.result);
+            });
+            return false;
+        });
+        });
+    </script>
+    <script type=text/javascript>
+        $(function() {
+        $('a#playlist_play').bind('click', function() {
+            $.getJSON('/playlist_play', {
+            playlist_name: $('input[name="playlist_name"]').val(),
+            }, function(data) {
+            $("#result").text(data.result);
+            });
+            return false;
+        });
+        });
+    </script>
+    <script type=text/javascript>
+        $(function() {
+        $('a#playlist_pause').bind('click', function() {
+            $.getJSON('/playlist_pause', {
+            playlist_name: $('input[name="playlist_name"]').val(),
+            }, function(data) {
+            $("#result").text(data.result);
+            });
+            return false;
+        });
+        });
+    </script>
+    <script type=text/javascript>
+        $(function() {
+        $('a#playlist_next').bind('click', function() {
+            $.getJSON('/playlist_next', {
+            playlist_name: $('input[name="playlist_name"]').val(),
+            }, function(data) {
+            $("#result").text(data.result);
+            });
+            return false;
+        });
+        });
+    </script>
+    <script type=text/javascript>
+        $(function() {
+        $('a#playlist_previous').bind('click', function() {
+            $.getJSON('/playlist_previous', {
+            playlist_name: $('input[name="playlist_name"]').val(),
+            }, function(data) {
+            $("#result").text(data.result);
+            });
+            return false;
+        });
+        });
+    </script>
+    <script type=text/javascript>
+        $(function() {
+        $('a#playlist_repeat').bind('click', function() {
+            $.getJSON('/playlist_repeat', {
+            playlist_name: $('input[name="playlist_name"]').val(),
+            }, function(data) {
+            $("#result").text(data.result);
+            });
+            return false;
+        });
+        });
+    </script>
+    <script type=text/javascript>
+        $(function() {
+        $('a#playlist_loop').bind('click', function() {
+            $.getJSON('/playlist_loop', {
+            playlist_name: $('input[name="playlist_name"]').val(),
+            }, function(data) {
+            $("#result").text(data.result);
+            });
+            return false;
+        });
+        });
+    </script>
+    <script type=text/javascript>
+        $(function() {
+        $('a#playlist_default').bind('click', function() {
+            $.getJSON('/playlist_default', {
+            playlist_name: $('input[name="playlist_name"]').val(),
+            }, function(data) {
+            $("#result").text(data.result);
+            });
+            return false;
+        });
+        });
+    </script>
+    <script type=text/javascript>
+        $(function() {
+        $('a#playlist_stop').bind('click', function() {
+            $.getJSON('/playlist_stop', {
+            playlist_name: $('input[name="playlist_name"]').val(),
+            }, function(data) {
+            $("#result").text(data.result);
+            });
+            return false;
+        });
+        });
+    </script>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Choose the operation you would like to perform</h1><br>
+<!--<a href = "choice1.html">Add song to a playlist</a><br>
+    <a href = "choice2.html">Delete a song from a playlist</a><br>
+    <a href = "choice3.html">List all playlists</a><br>
+    <a href = "choice4.html">List all songs in a playlist</a><br>-->
+    <form>
+            <input type=text name=getsminput>
+            <a href=# id=process_input><button class='btn btn-default'>Add song</button></a>
+        </form>
+    <form>
+            <input type=text size=5 name=playlist_name>
+            <a href=# id=playlist_play><button class='btn btn-default'>Play</button></a>
+            <a href=# id=playlist_pause><button class='btn btn-default'>Pause</button></a>
+            <a href=# id=playlist_next><button class='btn btn-default'>Next</button></a>
+            <a href=# id=playlist_previous><button class='btn btn-default'>Previous</button></a>
+            <a href=# id=playlist_repeat><button class='btn btn-default'>Repeat</button></a>
+            <a href=# id=playlist_loop><button class='btn btn-default'>Loop</button></a>
+            <a href=# id=playlist_default><button class='btn btn-default'>Default</button></a>
+            <a href=# id=playlist_stop><button class='btn btn-default'>Stop</button></a>
+        </form>
+    
+</body>
+</html>

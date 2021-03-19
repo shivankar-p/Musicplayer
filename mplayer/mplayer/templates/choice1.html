@@ -1,0 +1,27 @@
+
+<head>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script type=text/javascript>
+        $(function() {
+        $('a#process_input').bind('click', function() {
+            $.getJSON('/choice1', {
+            playlist_name: $('input[name="getsminput"]').val(),
+            }, function(data) {
+            $("#result").text(data.result);
+            });
+            return false;
+        });
+        });
+    </script>
+</head>
+
+<body>
+    <div class='container'>
+    <h3>Musico player</h3>
+        <form>
+            <input type=text name=getsminput>
+            <a href=# id=process_input><button class='btn btn-default'>Add</button></a>
+        </form>
+    <p id=result></p>
+    </div>
+</body>
