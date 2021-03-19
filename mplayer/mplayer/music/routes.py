@@ -13,6 +13,7 @@ player = playerwrapper()
 @music.route('/browse/<song_ID>/<title>/<duration>/<artist>/<thumbnail>', methods=['GET', 'POST'])
 def play_song(song_ID, title, duration, artist, thumbnail):
     thumbnail = 'https://lh3.googleusercontent.com/'+thumbnail
+    print(thumbnail)
     return render_template('play_song.html', song_ID = song_ID, title=title, duration=duration, artist=artist, thumbnail=thumbnail)
 
 @music.route('/play_song_process')
