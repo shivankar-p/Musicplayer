@@ -123,9 +123,7 @@ def reset_token(token):
         return redirect(url_for('users.login'))
     return render_template('reset_token.html', title='Reset Password', form=form)
   
-'''@users.route("/player", methods=['GET', 'POST'])
+@users.route("/player", methods=['GET', 'POST'])
 def player():
-    return render_template('player.html')'''
-
-
+    return render_template('player.html')
 
