@@ -8,9 +8,10 @@ music = Blueprint('music', __name__)
 ytmusic = YTMusic()
 player = playerwrapper()
 
-@music.route('/browse/<song_ID>')
-def play_song(song_ID):
-    return render_template('play_song.html', song_ID = song_ID)
+@music.route('/browse/<song_ID>/<title>/<duration>/<artist>/<thumbnail>', methods=['GET', 'POST'])
+def play_song(song_ID, title, duration, artist, thumbnail):
+    thumbnail = 'https://lh3.googleusercontent.com/'+thumbnail
+    return render_template('play_song.html', song_ID = song_ID, title=title, duration=duration, artist=artist, thumbnail=thumbnail)
 
 @music.route('/play_song_process')
 def play_song_process():
@@ -58,7 +59,14 @@ def browse():
             song_name = ''.join(song_name)
             song_results = ytmusic.search(query = song_name, filter = "songs")
             song_ID = song_results[0]['videoId']
-            return redirect(url_for('music.play_song', song_ID= song_ID))
+            title = song_results[0]['title']
+            duration=song_results[0]['duration']
+            artist = song_results[0]['artists'][0]['name']
+            thumbnail=song_results[0]['thumbnails'][0]['url']
+            thumbnail=list(thumbnail)
+            thumbnail=thumbnail[34:]
+            thumbnail=''.join(thumbnail)
+            return redirect(url_for('music.play_song', song_ID= song_ID,  title=title, duration=duration, artist=artist, thumbnail=thumbnail ))
         except Exception as e:
             return str(e)
 
