@@ -37,12 +37,14 @@
                   align-self: center;      
                 }
                 </style>
+                {% if current_user.is_authenticated %}
                 <div class="vl"></div>
-              <a class="nav-item nav-link" href="{{ url_for('music.browse') }}">Browse</a>
-              {% if current_user.is_authenticated %}
+                <a class="nav-item nav-link" href="{{ url_for('music.browse') }}">Browse</a>
+                {% endif %}
+              <!--{% if current_user.is_authenticated %}
               <div class="vl"></div>
                 <a class="nav-item nav-link" href="{{ url_for('music.playlist') }}">Playlist</a>
-                {% endif %}
+                {% endif %}-->
             </div>
             <!-- Right corner -->
             <div class="navbar-nav">
@@ -54,6 +56,11 @@
                 <a class="nav-item nav-link" href="{{ url_for('users.login') }}">LOG IN</a>
                 <div class="vl"></div>
                 <a class="nav-item nav-link" href="{{ url_for('users.register') }}">SIGN UP</a>
+              {% endif %}  
+              {% if current_user.is_authenticated %}
+              <div class="media">
+                <img class="rounded-circle" src="{{ image_file }}" width="35" height="35"></img>
+              </div>
               {% endif %}  
               </main>    
             </div>

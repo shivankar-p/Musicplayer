@@ -37,7 +37,7 @@
         });
         });
     </script>
-
+    
 	<style type = "text/css">
     @-webkit-keyframes playing {
   0% {
@@ -81,7 +81,7 @@ body {
   margin-top: 1em; }
 
 #player {
-  background-color: #ecf0f1;
+  background-color: palegoldenrod;
   width: 120%;
   display: block;
   overflow: hidden;
@@ -165,13 +165,13 @@ body {
   overflow: hidden; }
 
 .progress {
-  -webkit-animation: playing 60s infinite;
+  -webkit-animation: playing 213s infinite;
   /* Safari 4+ */
-  -moz-animation: playing 60s infinite;
+  -moz-animation: playing 213s infinite;
   /* Fx 5+ */
-  -o-animation: playing 60s infinite;
+  -o-animation: playing 213s infinite;
   /* Opera 12+ */
-  animation: playing 60s infinite;
+  animation: playing 213s infinite;
   display: block;
   height: 8px;
   background-image: -webkit-gradient(linear, 0% 50%, 100% 50%, color-stop(0%, #d35400), color-stop(100%, #f1c40f));
@@ -199,6 +199,7 @@ h3 {
 
 .elapsed {
   margin-bottom: 1em;
+  font-weight: 900;
   font-size: .8em;
   color: #c2c8cc; }
 
@@ -264,6 +265,71 @@ h3 {
     font-weight: 400;
     margin-bottom: .5em; }
 
+    /*slider*/
+    .slider_container {
+      width: 75%;
+      max-width: 400px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* Modify the appearance of the slider */
+    .seek_slider,
+    .volume_slider {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      height: 5px;
+      background: black;
+      opacity: 0.7;
+      -webkit-transition: .2ss;
+      transition: opacity .2ss;
+    }
+
+    /* Modify the appearance of the slider thumb */
+    .seek_slider::-webkit-slider-thumb,
+    .volume_slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      width: 15px;
+      height: 15px;
+      background: white;
+      cursor: pointer;
+      border-radius: 50%;
+    }
+
+    .seek_slider:hover,
+    .volume_slider:hover {
+      opacity: 1.0;
+    }
+
+    .seek_slider {
+      width: 60%;
+    }
+
+    .volume_slider {
+      width: 30%;
+    }
+
+    .current-time,
+    .total-duration {
+      padding: 10px;
+    }
+
+    i.fa-volume-down,
+    i.fa-volume-up {
+      padding: 10px;
+    }
+
+    i.fa-play-circle,
+    i.fa-pause-circle,
+    i.fa-step-forward,
+    i.fa-step-backward {
+      cursor: pointer;
+    }
+
     </style>
 
     <meta charset="UTF-8">
@@ -291,6 +357,70 @@ h3 {
 			<div class="time">
 				<div class="progress"></div>
 			</div>
+      <!--elapsed time slider-->
+
+    <script>
+      let seek_slider = document.querySelector(".seek_slider");
+      let curr_time = document.querySelector(".current-time");
+      let total_duration = document.querySelector(".total-duration");
+      let isPlaying = false;
+      updateTimer = setInterval(seekUpdate, 1000);
+      random_bg_color();
+
+      // Reset Values
+    function resetValues() {
+      curr_time.textContent = "00:00";
+      total_duration.textContent = "00:00";
+      seek_slider.value = 0;
+    }
+
+      function seekTo() {
+        seekto = curr_track.duration * (seek_slider.value / 100);
+        curr_track.currentTime = seekto;
+      }
+  
+      
+      function random_bg_color() {
+
+                  // Get a random number between 64 to 256 (for getting lighter colors)
+                  let red = Math.floor(Math.random() * 256) + 64;
+                  let green = Math.floor(Math.random() * 256) + 64;
+                  let blue = Math.floor(Math.random() * 256) + 64;
+
+                  // Construct a color withe the given values
+                  let bgColor = "rgb(" + red + "," + green + "," + blue + ")";
+
+                  // Set the background to that color
+                  document.body.style.background = bgColor;
+}
+  
+      function seekUpdate() {
+        let seekPosition = 0;
+  
+        // Check if the current track duration is a legible number
+        if (!isNaN(curr_track.duration)) {
+          seekPosition = curr_track.currentTime * (100 / curr_track.duration);
+          seek_slider.value = seekPosition;
+  
+          // Calculate the time left and the total duration
+          let currentMinutes = Math.floor(curr_track.currentTime / 60);
+          let currentSeconds = Math.floor(curr_track.currentTime - currentMinutes * 60);
+          let durationMinutes = Math.floor(curr_track.duration / 60);
+          let durationSeconds = Math.floor(curr_track.duration - durationMinutes * 60);
+  
+          // Adding a zero to the single digit time values
+          if (currentSeconds < 10) { currentSeconds = "0" + currentSeconds; }
+          if (durationSeconds < 10) { durationSeconds = "0" + durationSeconds; }
+          if (currentMinutes < 10) { currentMinutes = "0" + currentMinutes; }
+          if (durationMinutes < 10) { durationMinutes = "0" + durationMinutes; }
+  
+          curr_time.textContent = currentMinutes + ":" + currentSeconds;
+          total_duration.textContent = durationMinutes + ":" + durationSeconds;
+        }
+      }
+      </script>
+      
+  
 
 			<div class="info">
 				<div class="elapsed">{{ duration }}</div>
