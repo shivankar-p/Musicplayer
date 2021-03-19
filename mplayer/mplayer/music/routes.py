@@ -1,5 +1,5 @@
 from flask import Flask, render_template, url_for, flash, redirect, request, Blueprint, jsonify
-from flask_login import login_required
+from flask_login import login_required, current_user
 from mplayer import db, bcrypt
 from ytmusicapi import YTMusic
 from mplayer.music.vlcpl import *
@@ -54,6 +54,7 @@ def stop_song_process():
 @music.route('/browse', methods=['POST', 'GET'])
 def browse():
     form = SearchForm()
+    image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
     if form.validate_on_submit():
         try:
             song_name = list(str(form.song_name))
@@ -73,7 +74,7 @@ def browse():
         except Exception as e:
             return str(e)
 
-    return render_template('browse.html', form=form)
+    return render_template('browse.html', form=form, image_file=image_file)
 
 '''@music.route('/background_process')
 def background_process():
