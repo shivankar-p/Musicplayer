@@ -75,12 +75,30 @@
 </head>
 
 <body>
-    <div class='container'>
-    <h3>Musico player</h3>
-        <form>
-            <input type=text size=5 name=song_name>
-            <a href=# id=process_input><button class='btn btn-default'>Add</button></a>
-        </form>
+    <div class="content-section">
+        <form method="POST" action="" enctype="multipart/form-data">  <!-- Encryption type-->
+            {{ form.hidden_tag() }}
+            <fieldset class="form-group">
+                <legend>Search</legend>
+                <hr style="width:50%;text-align: left; margin-left:0; margin-top: 0">
+                <div class="form-group">
+                    {{ form.song_name.label(class="form-control-label") }}
+    
+                    {% if form.song_name.errors %}
+                        {{ form.song_name(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.song_name.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.song_name(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+            </fieldset>
+            <div class="form-group">
+                {{ form.submit(class="btn btn-outline-info") }}
+            </div>
         <form>
             <input type=text size=5 name=playlist_name>
             <a href=# id=playlist_play><button class='btn btn-default'>Play</button></a>

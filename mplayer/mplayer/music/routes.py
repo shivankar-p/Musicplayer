@@ -2,6 +2,7 @@ from flask import Flask, render_template, url_for, flash, redirect, request, Blu
 from mplayer import db, bcrypt
 from ytmusicapi import YTMusic
 from mplayer.music.vlcpl import *
+from mplayer.users.forms import SearchForm
 
 music = Blueprint('music', __name__)
 ytmusic = YTMusic()
@@ -48,9 +49,22 @@ def stop_song_process():
 
 @music.route('/browse', methods=['POST', 'GET'])
 def browse():
-    return render_template('browse.html')
+    form = SearchForm()
+    if form.validate_on_submit():
+        try:
+            song_name = list(str(form.song_name))
+            song_name = song_name[67:]
+            song_name = song_name[0:-2]
+            song_name = ''.join(song_name)
+            song_results = ytmusic.search(query = song_name, filter = "songs")
+            song_ID = song_results[0]['videoId']
+            return redirect(url_for('music.play_song', song_ID= song_ID))
+        except Exception as e:
+            return str(e)
 
-@music.route('/background_process')
+    return render_template('browse.html', form=form)
+
+'''@music.route('/background_process')
 def background_process():
     try:
         song_name = request.args.get('song_name', 0, type=str)
@@ -59,7 +73,7 @@ def background_process():
         return jsonify(result='You added ' + song_ID)
 
     except Exception as e:
-        return str(e)
+        return str(e)'''
 
 @music.route('/playlist_play')
 def playlist_play():
@@ -113,4 +127,5 @@ def playlist_stop():
 
     except Exception as e:
     	return str(e)
+
 

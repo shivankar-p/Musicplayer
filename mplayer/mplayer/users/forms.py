@@ -73,3 +73,7 @@ class ResetPasswordForm(FlaskForm):
 class DeleteAccountForm(FlaskForm):
     reason = StringField('Reason', validators=[DataRequired()])
     submit = SubmitField('Delete Account')    
+
+class SearchForm(FlaskForm):
+    song_name = StringField('Song', validators=[DataRequired()])
+    submit = SubmitField('Search')    
