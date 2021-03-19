@@ -1,5 +1,5 @@
 from flask import Flask, render_template, url_for, flash, redirect, request, Blueprint, jsonify
-from flask_login import login_required
+from flask_login import current_user, login_required
 from mplayer import db, bcrypt
 from ytmusicapi import YTMusic
 from mplayer.music.vlcpl import *
@@ -186,11 +186,15 @@ def choice1():
 
         song_results = ytmusic.search(query = sng, filter = "songs")
         song_ID = song_results[0]['videoId']
-        songinfo = sng_in_pl(username = current_user.username, playlist = pl, song = song_ID)
+        songinfo = sng_in_pl(username=current_user.username, playlist=pl, song=song_ID)
         db.session.add(songinfo)
         db.session.commit()
         return jsonify(result='You added ' + sng + 'in' + pl)
 
+    except SQLAlchemyError as e:
+        err = str(e.__dict__['orig'])
+        print(err)
+        return err
     except Exception as e:
         return str(e)
 

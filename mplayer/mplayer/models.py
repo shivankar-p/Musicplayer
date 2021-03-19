@@ -32,7 +32,9 @@ class User(db.Model, UserMixin):
         return f"User('{self.username}', '{self.email}', '{self.image_file}')"
 
 class sng_in_pl(db.Model):
+    __tablename__ = 'sng_in_pl'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), nullable=False)
     playlist = db.Column(db.String(20), nullable=False)
     song = db.Column(db.String(20), unique=True, nullable=False)
+
