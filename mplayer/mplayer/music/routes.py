@@ -175,7 +175,8 @@ def playlist_stop():
 @login_required
 @music.route('/playlist')
 def playlist():
-    return render_template('playlist.html')
+    image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
+    return render_template('playlist.html', image_file = image_file)
 
 @music.route('/choice1', methods=['POST', 'GET'])
 def choice1():
@@ -209,11 +210,14 @@ def choice2():
 
         song_results = ytmusic.search(query = sng, filter = "songs")
         song_ID = song_results[0]['videoId']
-        songinfo = sng_in_pl(username = current_user.username, playlist = pl, song = song_ID)
+        songinfo = sng_in_pl(username=current_user.username, playlist=pl, song=song_ID)
         db.session.delete(songinfo)
         db.session.commit()
         return jsonify(result='You added ' + sng + 'in' + pl)
-
+    except SQLAlchemyError as e:
+        err = str(e.__dict__['orig'])
+        print(err)
+        return err
     except Exception as e:
         return str(e)
 
